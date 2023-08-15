@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SafeNet</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            margin-bottom: 10px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .secured {
+            color: green;
+        }
+        .not-secured {
+            color: red;
+        }
+        .open-network {
+            color: orange;
+        }
+        .captive-portal {
+            color: blue;
+        }
+        .open-port{
+            color: orange;
+        }
+    </style>
+</head>
+<body>
+    <h1>SafeNet WiFi Safety Check</h1>
+    <p>Your IP Address: {{ ip_address }}</p>
+    {% if error_message %}
+        <p style="color: red;">{{ error_message }}</p>
+    {% else %}
+    <ul>
+        {% for wifi in wifi_list %}
+            <li>
+                <strong>Connected:</strong> {{ wifi.connected }}<br>
+                <strong>SSID:</strong> {{ wifi.ssid }}<br>
+                <strong>BSSID:</strong> {{ wifi.bssid }}<br>
+                <strong>Signal Strength:</strong> {{ wifi.signal_strength }} dBm<br>
+                
+                {% if wifi.secured %}
+                    <span class="secured">Secured</span>
+                {% else %}
+                    <span class="not-secured">Not Secured</span>
+                {% endif %}
+                
+                {% if wifi.open_network %}
+                    <span class="open-network">Open Network</span>
+                {% else %}
+                    <br>
+                    <span class="not-open-network"><strong>Not An Open Network</strong></span>
+                    <br>
+                {% endif %}
+                
+                {% if wifi.weak_signal %}
+                    <br><span class="weak-signal">Weak Signal Strength</span>
+                {% else %}
+                    <span class="not-weak-signal"><strong>Strong Signal Strength</strong></span>
+                    <br>
+                {% endif %}
+                {% if wifi.captive_portal %}
+                    <br><span class="captive-portal">Possible Captive Portal</span>
+                {% else %}
+                <span class="no-captive-portal"><strong>Safe Portal</strong></span>
+                <br>
+                {% endif %}
+                
+                {% if wifi.open_ports %}
+                    <span class="open-port">Open Ports {{wifi.open_ports}}</span>
+                {% endif %}
+            </li>
+        {% endfor %}
+        {% endif %}
+    </ul>
+</body>
+</html>

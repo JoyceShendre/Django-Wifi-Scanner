@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fake Captive Portal Detection</title>
+</head>
+<body>
+    <h1>Fake Captive Portal Detection</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="login_url">WiFi Login URL:</label>
+        <input type="text" name="login_url" required><br>
+        <button type="submit">Check</button>
+    </form>
+     {% if is_captive_portal is not None %}
+        {% if is_captive_portal is False%}
+            <p style="color: red;">The provided URL may be a fake captive portal.</p>
+        {% else %}
+            <p>The provided URL does not appear to be a fake captive portal.</p>
+        {% endif %}
+    {% endif %}
+</body>
+</html>

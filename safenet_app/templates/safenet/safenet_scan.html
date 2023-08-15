@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SafeNet</title>
+</head>
+<body>
+    <h1>SafeNet WiFi Safety Check</h1>
+    {% if error_message is not None %}
+        <p style="color: rgb(255, 17, 0);">{{ error_message }}</p>
+    {% else %}
+        <form action="{% url 'safenet_results' %}" method="post">
+            {% csrf_token %}
+            <button type="submit">Scan WiFi Safety</button>
+        </form>
+    {% endif %}
+</body>
+</html>
+
